@@ -29,14 +29,16 @@ model Project {
 model Site {
   id             Int        @id @default(autoincrement())
   name           String
+  vegetationType String?    // NEW — forest, grassland, etc.
   project        Project    @relation(fields: [projectId], references: [id])
   projectId      Int
-  geometry       Json       // GeoJSON polygon
+  geometry       Json
   areaSqMeters   Float
   carbonEstimate Float
   createdAt      DateTime   @default(now())
   analytics      Analytics[]
 }
+
 
 model Analytics {
   id       Int      @id @default(autoincrement())

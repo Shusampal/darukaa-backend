@@ -2,20 +2,23 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 const carbon = require("./carbon.service");
 
-async function createSite(ownerId, projectId, { name, geometry }) {
-  // geometry expected GeoJSON (Polygon)
+async function createSite(
+  ownerId,
+  projectId,
+  { name, geometry, vegetationType }
+) {
   const areaSqMeters = carbon.computeAreaSqMeters(geometry);
   const carbonEstimate = carbon.estimateCarbon(areaSqMeters);
-  const site = await prisma.site.create({
+  return prisma.site.create({
     data: {
       name,
       projectId: Number(projectId),
       geometry,
+      vegetationType,
       areaSqMeters,
       carbonEstimate,
     },
   });
-  return site;
 }
 
 async function getSitesByProject(projectId) {

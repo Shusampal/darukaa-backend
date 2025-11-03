@@ -24,6 +24,8 @@ app.get("/health", (req, res) =>
   res.status(200).json({ success: true, message: "I am working fine" })
 );
 
+app.use((req, res) => res.status(404).json({ error: "Not found" }));
+
 app.use(errorHandler);
 
 module.exports = app;

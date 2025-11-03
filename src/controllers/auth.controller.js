@@ -4,8 +4,15 @@ const logger = require("../config/logger");
 async function register(req, res, next) {
   try {
     const { name, email, password } = req.body;
-    const user = await authService.register({ name, email, password });
-    res.status(201).json({ id: user.id, email: user.email });
+    const { user, token } = await authService.register({
+      name,
+      email,
+      password,
+    });
+    res.status(201).json({
+      token,
+      user: { id: user.id, email: user.email, name: user.name },
+    });
   } catch (err) {
     logger.error(err);
     next(err);

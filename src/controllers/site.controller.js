@@ -4,13 +4,15 @@ async function createSite(req, res, next) {
   try {
     const ownerId = Number(req.user.userId);
     const { projectId } = req.params;
-    const { name, geometry } = req.body;
-    // basic validation
+    const { name, geometry, vegetationType } = req.body;
+
     if (!name || !geometry)
       return res.status(400).json({ error: "Missing name or geometry" });
+
     const site = await siteService.createSite(ownerId, projectId, {
       name,
       geometry,
+      vegetationType, // NEW
     });
     res.status(201).json(site);
   } catch (err) {
