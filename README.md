@@ -180,10 +180,7 @@ npm run dev
 
 ## Analytics provided
 
-Total Site Area (sq.m) — calculated directly from the polygon geometry.
-Estimated CO₂ Offset (tons/year) — calculated using vegetation-specific rates.
-Growth Trend (time-series) — generated dynamically to simulate monthly accumulation over time.
-Progress % — represents how far along the site is toward maturity.
+Total Site Area (sq.m), Estimated CO₂ Offset (tons/year) , Progress %
 
 
 
