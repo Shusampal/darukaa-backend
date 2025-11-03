@@ -11,7 +11,7 @@ async function seedIfEmpty() {
     const users = await prisma.user.count();
     if (users === 0) {
       logger.info("🌱 No users found — running DB seed...");
-      const seed = require("./prisma/seed.js");
+      const seed = require("../prisma/seed.js");
       await seed.main(); // call seed.main() directly
       logger.info("✅ Seed data populated successfully.");
     } else {
