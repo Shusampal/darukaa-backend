@@ -20,4 +20,15 @@ async function listProjects(req, res, next) {
   }
 }
 
-module.exports = { createProject, listProjects };
+async function getProject(req, res, next) {
+  try {
+    const ownerId = Number(req.user.userId);
+    const { projectId } = req.params;
+    const projects = await projectService.getProject(ownerId, projectId);
+    res.json(projects);
+  } catch (err) {
+    next(err);
+  }
+}
+
+module.exports = { createProject, listProjects, getProject };

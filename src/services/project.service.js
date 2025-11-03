@@ -14,4 +14,10 @@ async function listProjects(ownerId, skip = 0, take = 20) {
   });
 }
 
-module.exports = { createProject, listProjects };
+async function getProject(ownerId, projectId) {
+  return prisma.project.findUnique({
+    where: { ownerId, id: projectId },
+  });
+}
+
+module.exports = { createProject, listProjects, getProject };
