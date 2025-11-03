@@ -31,6 +31,13 @@ bcrypt for hashing
 Turf.js for geospatial area calculation
 
 
+
+### NOTE-
+
+Though for backend , it was mentioned to use python based backend , but at this point i am more comfortable in nodejs based backend. so i made this project on nodejs.
+Though I am learning python based backend and surely will be able to build production level apps.
+
+
 ---
 
 
@@ -119,18 +126,18 @@ git clone https://github.com/your-username/darukaa-earth-backend.git
 cd darukaa-earth-backend
 
 
-Install dependencies:
+### Install dependencies:
 npm install
 
 
-Create .env file:
+### Create .env file:
 DATABASE_URL="your_postgres_url"
 JWT_SECRET="change_this_fast"
 PORT=8080
 CARBON_PER_SQKM=200
 
 
-Run the backend:
+### Run the backend:
 npm start
 
 
@@ -140,14 +147,14 @@ npm start
 
 cd darukaa-earth-frontend
 
-Install dependencies:
+### Install dependencies:
 npm install
 
-Create .env file:
+### Create .env file:
 VITE_API_BASE=http://localhost:8080/api
 VITE_MAPBOX_TOKEN=your_mapbox_token
 
-Run the frontend:
+### Run the frontend:
 npm run dev
 
 
