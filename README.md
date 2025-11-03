@@ -124,9 +124,6 @@ git clone https://github.com/your-username/darukaa-earth-backend.git
 ## Setup backend:
 
 
-cd darukaa-earth-backend
-
-
 
 ### Install dependencies:
 
@@ -156,8 +153,6 @@ npm start
 
 ## Setup Frontend
 
-
-cd darukaa-earth-frontend
 
 
 ### Install dependencies:
