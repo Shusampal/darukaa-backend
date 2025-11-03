@@ -52,24 +52,8 @@ Backend (Node.js + Express + Prisma)
 └── Carbon Calculation Service
 
 
-┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
-│   React         │    │   Express.js     │    │   PostgreSQL    │
-│   Frontend      │◄──►│   Backend API    │◄──►│   Database      │
-│                 │    │                  │    │                 │
-│ • Mapbox Maps   │    │ • JWT Auth       │    │ • Users         │
-│ • Chart.js      │    │ • GeoJSON        │    │ • Projects      │
-│ • Real-time UI  │    │ • Carbon Calc    │    │ • Sites         │
-└─────────────────┘    └──────────────────┘    └─────────────────┘
-         │                       │                       │
-         │                       │                       │
-         └───────────────────────┼───────────────────────┘
-                                 │
-                     ┌───────────┴───────────┐
-                     │     External APIs     │
-                     │                       │
-                     │ • Mapbox (Maps)       │
-                     │ • Turf.js (Geospatial)│
-                     └───────────────────────┘
+<img width="470" height="399" alt="Screenshot 2025-11-03 221312" src="https://github.com/user-attachments/assets/ce3357bb-b4f0-458a-a017-df7333ebf5d7" />
+
 
 
 
