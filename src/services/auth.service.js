@@ -25,7 +25,13 @@ async function register({ name, email, password }) {
 async function login({ email, password }) {
   const user = await prisma.user.findUnique({ where: { email } });
   if (!user) throw new Error("Invalid credentials");
-  const ok = await bcrypt.compare(password, user.password);
+  console.log("DB password", password);
+  console.log("DB password type", tpassword);
+  const ok = await bcrypt.compare(
+    password.toString(),
+    user.password.toString()
+  );
+  console.log("ok", ok);
   if (!ok) throw new Error("Invalid credentials");
 
   const token = generateToken(user);

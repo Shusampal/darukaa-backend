@@ -12,7 +12,7 @@ async function main() {
     create: {
       name: "Alice Green",
       email: "alice@darukaa.earth",
-      password: "123", // password123
+      password: "123",
     },
   });
 
