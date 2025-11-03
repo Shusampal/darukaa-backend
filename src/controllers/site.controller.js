@@ -28,4 +28,14 @@ async function listSites(req, res, next) {
   }
 }
 
-module.exports = { createSite, listSites };
+async function allSites(req, res, next) {
+  try {
+    const { projectId } = req.params;
+    const sites = await siteService.getAllSites();
+    res.json(sites);
+  } catch (err) {
+    next(err);
+  }
+}
+
+module.exports = { createSite, listSites, allSites };

@@ -22,4 +22,8 @@ async function getSitesByProject(projectId) {
   return prisma.site.findMany({ where: { projectId: Number(projectId) } });
 }
 
-module.exports = { createSite, getSitesByProject };
+async function getAllSites() {
+  return prisma.site.findMany({});
+}
+
+module.exports = { createSite, getSitesByProject, getAllSites };
