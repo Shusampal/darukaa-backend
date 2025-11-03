@@ -7,18 +7,23 @@ async function createSite(req, res, next) {
     const { projectId } = req.params;
 
     console.log("Creating site for project:", projectId);
-    console.log("Request body:", JSON.stringify(req.body, null, 2));
 
     // Enhanced validation
     const validationResult = siteCreateSchema.safeParse(req.body);
     if (!validationResult.success) {
       console.log("Validation failed:", validationResult.error.errors);
+
+      // Get the first error message
+      const firstError = validationResult.error.errors[0];
+      const errorMessage = firstError
+        ? firstError.message
+        : "Invalid site data";
+
       return res.status(400).json({
         success: false,
         error: "Validation failed",
+        message: errorMessage,
         details: validationResult.error.errors,
-        message:
-          validationResult.error.errors[0]?.message || "Invalid site data",
       });
     }
 
@@ -37,6 +42,16 @@ async function createSite(req, res, next) {
     });
   } catch (err) {
     console.error("Error in createSite controller:", err);
+
+    // Handle specific service errors
+    if (err.message.includes("Site validation failed")) {
+      return res.status(400).json({
+        success: false,
+        error: "Site validation failed",
+        message: err.message,
+      });
+    }
+
     next(err);
   }
 }
@@ -47,7 +62,7 @@ async function listSites(req, res, next) {
     const sites = await siteService.getSitesByProject(projectId);
     res.json({
       success: true,
-      sites: sites || [], // Ensure always an array
+      sites: sites || [],
     });
   } catch (err) {
     next(err);
@@ -59,7 +74,7 @@ async function allSites(req, res, next) {
     const sites = await siteService.getAllSites();
     res.json({
       success: true,
-      sites: sites || [], // Ensure always an array
+      sites: sites || [],
     });
   } catch (err) {
     next(err);
