@@ -2,11 +2,14 @@
 
 https://darukaa-frontend-production.up.railway.app
 
+---
 
 ## Credentials for Login
 
 ### email - alice@darukaa.com
 ### password - 123
+
+---
 
 
 ## Overview
