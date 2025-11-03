@@ -137,6 +137,8 @@ The project uses **PostgreSQL** with **Prisma ORM** for schema management.
 
 ## Setup backend:
 
+#### You must have local postgresql
+
 
 
 ### Install dependencies:
