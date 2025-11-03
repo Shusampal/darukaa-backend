@@ -24,7 +24,10 @@ async function getProject(req, res, next) {
   try {
     const ownerId = Number(req.user.userId);
     const { projectId } = req.params;
-    const projects = await projectService.getProject(ownerId, projectId);
+    const projects = await projectService.getProject(
+      ownerId,
+      Number(projectId)
+    );
     res.json(projects);
   } catch (err) {
     next(err);
