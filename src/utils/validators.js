@@ -30,19 +30,21 @@ const siteCreateSchema = z.object({
   geometry: geoJSONSchema.refine(
     (geo) => {
       try {
-        // Validate area limits (min 1000 sqm, max 100 sqkm)
+        // Validate area limits - only minimum restriction
         const turfArea = require("@turf/area").default || require("@turf/area");
         const area = turfArea(geo);
 
         console.log("Calculated area:", area, "sq meters");
 
-        // Check if area is within reasonable bounds
+        // Only check minimum area - remove maximum restriction
         if (area < 1000) {
-          return false; // Area too small
+          return false; // Area too small (minimum 1,000 sqm)
         }
-        if (area > 100000000) {
-          // 100 sqkm
-          return false; // Area too large
+
+        // Warn about very large areas but don't block them
+        if (area > 10000000000) {
+          // 10,000 sqkm - just for logging
+          console.warn("Very large area detected:", area / 1000000, "sq km");
         }
 
         return true;
@@ -53,7 +55,7 @@ const siteCreateSchema = z.object({
     },
     {
       message:
-        "Site area must be between 1,000 sqm and 100 sqkm. Please draw a smaller polygon closer to your actual planting area.",
+        "Site area must be at least 1,000 sqm. Please draw a larger polygon.",
     }
   ),
 });
