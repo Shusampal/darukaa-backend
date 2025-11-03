@@ -6,13 +6,9 @@ async function createSite(req, res, next) {
     const ownerId = Number(req.user.userId);
     const { projectId } = req.params;
 
-    console.log("Creating site for project:", projectId);
-
     // Enhanced validation
     const validationResult = siteCreateSchema.safeParse(req.body);
     if (!validationResult.success) {
-      console.log("Validation failed:", validationResult.error.errors);
-
       // Get the first error message
       const firstError = validationResult.error.errors[0];
       const errorMessage = firstError

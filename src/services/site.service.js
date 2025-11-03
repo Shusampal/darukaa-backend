@@ -12,10 +12,6 @@ async function createSite(
     const areaSqMeters = carbon.computeAreaSqMeters(geometry);
     const carbonEstimate = carbon.estimateCarbon(areaSqMeters, vegetationType);
 
-    console.log(
-      `Creating site: ${areaSqMeters.toLocaleString()} sqm, ${carbonEstimate.toFixed(2)} tons CO₂/year`
-    );
-
     return await prisma.site.create({
       data: {
         name,
