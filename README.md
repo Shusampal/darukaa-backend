@@ -36,15 +36,17 @@ Turf.js for geospatial area calculation
 
 ## High-Level Architecture
 
-Frontend (React + Vite)
+### Frontend (React + Vite)
 │
 │── Authentication (JWT)
 │── Map Visualization (Mapbox GL JS)
 │── Analytics Charts (Chart.js)
 │── Axios API Client (with interceptors)
 │
-└──> Connects via REST APIs to
-Backend (Node.js + Express + Prisma)
+└──> Rest APIs connection to backend
+
+
+### Backend (Node.js + Express + Prisma)
 │
 ├── PostgreSQL Database
 ├── JWT Authentication Middleware
