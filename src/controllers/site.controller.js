@@ -10,6 +10,7 @@ async function createSite(req, res, next) {
     const validationResult = siteCreateSchema.safeParse(req.body);
     if (!validationResult.success) {
       return res.status(400).json({
+        success: false,
         error: "Validation failed",
         details: validationResult.error.errors,
       });
@@ -37,7 +38,10 @@ async function listSites(req, res, next) {
   try {
     const { projectId } = req.params;
     const sites = await siteService.getSitesByProject(projectId);
-    res.json({ success: true, sites });
+    res.json({
+      success: true,
+      sites: sites || [], // Ensure always an array
+    });
   } catch (err) {
     next(err);
   }
@@ -46,7 +50,10 @@ async function listSites(req, res, next) {
 async function allSites(req, res, next) {
   try {
     const sites = await siteService.getAllSites();
-    res.json({ success: true, sites });
+    res.json({
+      success: true,
+      sites: sites || [], // Ensure always an array
+    });
   } catch (err) {
     next(err);
   }
