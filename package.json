@@ -7,8 +7,8 @@
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev --name init",
     "prepare": "husky install",
-    "start": "node -r dotenv/config src/index.js",
-    "postinstall": "npx prisma generate && npx prisma migrate deploy"
+    "postinstall": "npx prisma generate",
+    "start": "npx prisma migrate deploy && node -r dotenv/config src/index.js"
   },
   "keywords": [],
   "author": "",
