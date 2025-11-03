@@ -1,3 +1,8 @@
+## LIVE URL
+
+https://darukaa-frontend-production.up.railway.app
+
+
 ## Overview
 
 Darukaa.Earth lets users:
