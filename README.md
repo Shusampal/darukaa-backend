@@ -116,28 +116,28 @@ The project uses **PostgreSQL** with **Prisma ORM** for schema management.
 
 ### **1. Clone the Repositories**
 
-```bash
+
 git clone https://github.com/your-username/darukaa-earth-frontend.git
 git clone https://github.com/your-username/darukaa-earth-backend.git
 
 
 ## Setup backend:
 
-```bash
+
 cd darukaa-earth-backend
 
 
 
 ### Install dependencies:
 
-```bash
+
 npm install
 
 
 
 ### Create .env file:
 
-```bash
+
 DATABASE_URL="your_postgres_url"
 JWT_SECRET="change_this_fast"
 PORT=8080
@@ -147,7 +147,7 @@ CARBON_PER_SQKM=200
 
 ### Run the backend:
 
-```bash
+
 npm start
 
 
@@ -156,26 +156,26 @@ npm start
 
 ## Setup Frontend
 
-```bash
+
 cd darukaa-earth-frontend
 
 
 ### Install dependencies:
 
-```bash
+
 npm install
 
 
 ### Create .env file:
 
-```bash
+
 VITE_API_BASE=http://localhost:8080/api
 VITE_MAPBOX_TOKEN=your_mapbox_token
 
 
 ### Run the frontend:
 
-```bash
+
 npm run dev
 
 
