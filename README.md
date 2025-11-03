@@ -35,7 +35,7 @@ Turf.js for geospatial area calculation
 ### NOTE-
 
 Though for backend , it was mentioned to use python based backend , but at this point i am more comfortable in nodejs based backend. so i made this project on nodejs.
-Though I am learning python based backend and surely will be able to build production level apps.
+Though I am learning python based backend and surely will be able to build production level apps in near future.
 
 
 ---
@@ -119,43 +119,66 @@ The project uses **PostgreSQL** with **Prisma ORM** for schema management.
 ```bash
 git clone https://github.com/your-username/darukaa-earth-frontend.git
 git clone https://github.com/your-username/darukaa-earth-backend.git
+```bash
 
 
 ## Setup backend:
 
+```bash
 cd darukaa-earth-backend
+```bash
 
 
 ### Install dependencies:
+
+```bash
 npm install
+```bash
 
 
 ### Create .env file:
+
+```bash
 DATABASE_URL="your_postgres_url"
 JWT_SECRET="change_this_fast"
 PORT=8080
 CARBON_PER_SQKM=200
+```bash
 
 
 ### Run the backend:
+
+```bash
 npm start
+```bash
 
 
 
 
 ## Setup Frontend
 
+```bash
 cd darukaa-earth-frontend
+```bash
 
 ### Install dependencies:
+
+```bash
 npm install
+```bash
 
 ### Create .env file:
+
+```bash
 VITE_API_BASE=http://localhost:8080/api
 VITE_MAPBOX_TOKEN=your_mapbox_token
+```bash
 
 ### Run the frontend:
+
+```bash
 npm run dev
+```bash
 
 
 ---
