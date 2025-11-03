@@ -131,8 +131,8 @@ The project uses **PostgreSQL** with **Prisma ORM** for schema management.
 ### **1. Clone the Repositories**
 
 
-git clone https://github.com/your-username/darukaa-earth-frontend.git
-git clone https://github.com/your-username/darukaa-earth-backend.git
+#### git clone https://github.com/your-username/darukaa-earth-frontend.git
+#### git clone https://github.com/your-username/darukaa-earth-backend.git
 
 
 ## Setup backend:
