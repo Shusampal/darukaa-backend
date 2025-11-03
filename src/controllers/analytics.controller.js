@@ -1,12 +1,11 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
-// returns realistic timeseries based on site creation and carbon estimates
+// More realistic carbon analytics based on vegetation types and seasonal patterns
 async function getSiteAnalytics(req, res, next) {
   try {
     const { siteId } = req.params;
 
-    // Get site data including creation date and carbon estimate
     const site = await prisma.site.findUnique({
       where: { id: Number(siteId) },
       select: {
@@ -14,6 +13,7 @@ async function getSiteAnalytics(req, res, next) {
         createdAt: true,
         areaSqMeters: true,
         vegetationType: true,
+        name: true,
       },
     });
 
@@ -21,59 +21,97 @@ async function getSiteAnalytics(req, res, next) {
       return res.status(404).json({ error: "Site not found" });
     }
 
-    // Generate realistic growth data based on site characteristics
-    const growthRates = {
-      forest: 0.08, // 8% monthly growth
-      grassland: 0.05, // 5% monthly growth
-      wetland: 0.06, // 6% monthly growth
-      plantation: 0.1, // 10% monthly growth (managed growth)
+    // Realistic carbon sequestration patterns based on vegetation type
+    const sequestrationPatterns = {
+      forest: {
+        growthRate: 0.12, // 12% monthly growth initially
+        maturityMonths: 18,
+        seasonalVariation: 0.15,
+      },
+      grassland: {
+        growthRate: 0.08,
+        maturityMonths: 12,
+        seasonalVariation: 0.2,
+      },
+      wetland: {
+        growthRate: 0.1,
+        maturityMonths: 15,
+        seasonalVariation: 0.1,
+      },
+      plantation: {
+        growthRate: 0.15,
+        maturityMonths: 10,
+        seasonalVariation: 0.05,
+      },
     };
 
-    const growthRate = growthRates[site.vegetationType] || 0.07;
-    const baseCarbon = site.carbonEstimate * 0.1; // Start at 10% of final estimate
+    const pattern =
+      sequestrationPatterns[site.vegetationType] ||
+      sequestrationPatterns.forest;
 
-    // Generate monthly values from site creation to now
-    const now = new Date();
-    const siteCreation = new Date(site.createdAt);
     const data = [];
+    const siteCreation = new Date(site.createdAt);
+    const now = new Date();
 
     let currentDate = new Date(siteCreation);
-    let currentCarbon = baseCarbon;
+    let accumulatedCarbon = 0;
 
-    while (currentDate <= now && data.length < 24) {
-      // Max 2 years of data
-      // Add some realistic variation (±15%)
-      const variation = 0.85 + Math.random() * 0.3;
-      const monthlyCarbon = currentCarbon * variation;
+    while (currentDate <= now && data.length < 36) {
+      // Max 3 years of data
+      const monthsSinceCreation =
+        (currentDate - siteCreation) / (30 * 24 * 60 * 60 * 1000);
+
+      // Realistic growth curve - fast initial growth, slowing at maturity
+      const progress = Math.min(
+        1,
+        monthsSinceCreation / pattern.maturityMonths
+      );
+      const growthFactor = Math.sin((progress * Math.PI) / 2); // S-curve growth
+
+      // Seasonal variation based on month
+      const month = currentDate.getMonth();
+      const seasonalEffect =
+        1 + pattern.seasonalVariation * Math.sin((month * Math.PI) / 6);
+
+      const monthlyCarbon =
+        (site.carbonEstimate * growthFactor * seasonalEffect) / 12;
+      accumulatedCarbon += monthlyCarbon;
+
+      // Ensure we don't exceed total estimate
+      const currentCarbon = Math.min(
+        accumulatedCarbon,
+        site.carbonEstimate * 0.95
+      );
 
       data.push({
         date: new Date(currentDate).toISOString(),
-        value: Math.max(0, Math.round(monthlyCarbon * 100) / 100), // Ensure non-negative
+        value: Math.round(currentCarbon * 100) / 100,
+        progress: `${Math.round(progress * 100)}%`,
       });
 
-      // Grow carbon estimate for next month
-      currentCarbon *= 1 + growthRate;
-
-      // Move to next month
       currentDate.setMonth(currentDate.getMonth() + 1);
     }
 
-    // If no data (brand new site), create initial point
+    // If brand new site with no data yet
     if (data.length === 0) {
       data.push({
         date: siteCreation.toISOString(),
-        value: Math.round(baseCarbon * 100) / 100,
+        value: 0,
+        progress: "0%",
       });
     }
 
     res.json({
       siteId: Number(siteId),
-      metric: "carbon_capture_tons",
+      siteName: site.name,
+      metric: "carbon_sequestration_tons",
       summary: {
-        currentEstimate: site.carbonEstimate,
+        finalEstimate: site.carbonEstimate,
+        currentEstimate: data.length > 0 ? data[data.length - 1].value : 0,
         areaSqMeters: site.areaSqMeters,
         vegetationType: site.vegetationType,
         dataPoints: data.length,
+        progress: data.length > 0 ? data[data.length - 1].progress : "0%",
       },
       series: data,
     });
