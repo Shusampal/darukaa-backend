@@ -12,7 +12,7 @@ async function main() {
     create: {
       name: "Alice Green",
       email: "alice@darukaa.earth",
-      password: "$2a$10$O5WgHiFqyyL9Gr7wKQ2y8OM8y.uhzF4mKPQkECeBW2g/ymz2P9bce", // password123
+      password: "123", // password123
     },
   });
 
@@ -22,7 +22,7 @@ async function main() {
     create: {
       name: "Bob Forest",
       email: "bob@darukaa.earth",
-      password: "$2a$10$O5WgHiFqyyL9Gr7wKQ2y8OM8y.uhzF4mKPQkECeBW2g/ymz2P9bce", // password123
+      password: "123",
     },
   });
 
