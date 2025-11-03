@@ -7,8 +7,8 @@ const {
 } = require("../controllers/site.controller");
 
 router.use(requireAuth);
+router.get("/", allSites);
 router.post("/:projectId", createSite);
 router.get("/project/:projectId", listSites);
-router.get("/sites", allSites);
 
 module.exports = router;
