@@ -6,13 +6,19 @@ async function createSite(req, res, next) {
     const ownerId = Number(req.user.userId);
     const { projectId } = req.params;
 
+    console.log("Creating site for project:", projectId);
+    console.log("Request body:", JSON.stringify(req.body, null, 2));
+
     // Enhanced validation
     const validationResult = siteCreateSchema.safeParse(req.body);
     if (!validationResult.success) {
+      console.log("Validation failed:", validationResult.error.errors);
       return res.status(400).json({
         success: false,
         error: "Validation failed",
         details: validationResult.error.errors,
+        message:
+          validationResult.error.errors[0]?.message || "Invalid site data",
       });
     }
 
@@ -30,6 +36,7 @@ async function createSite(req, res, next) {
       message: "Site created successfully",
     });
   } catch (err) {
+    console.error("Error in createSite controller:", err);
     next(err);
   }
 }
