@@ -8,7 +8,7 @@ const {
 
 router.use(requireAuth);
 router.get("/", allSites);
-router.post("/:projectId", createSite);
 router.get("/project/:projectId", listSites);
+router.post("/project/:projectId", createSite);
 
 module.exports = router;
