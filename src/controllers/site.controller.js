@@ -1,20 +1,33 @@
 const siteService = require("../services/site.service");
+const { siteCreateSchema } = require("../utils/validators");
 
 async function createSite(req, res, next) {
   try {
     const ownerId = Number(req.user.userId);
     const { projectId } = req.params;
-    const { name, geometry, vegetationType } = req.body;
 
-    if (!name || !geometry)
-      return res.status(400).json({ error: "Missing name or geometry" });
+    // Enhanced validation
+    const validationResult = siteCreateSchema.safeParse(req.body);
+    if (!validationResult.success) {
+      return res.status(400).json({
+        error: "Validation failed",
+        details: validationResult.error.errors,
+      });
+    }
+
+    const { name, geometry, vegetationType } = validationResult.data;
 
     const site = await siteService.createSite(ownerId, projectId, {
       name,
       geometry,
-      vegetationType, // NEW
+      vegetationType,
     });
-    res.status(201).json(site);
+
+    res.status(201).json({
+      success: true,
+      site,
+      message: "Site created successfully",
+    });
   } catch (err) {
     next(err);
   }
@@ -24,7 +37,7 @@ async function listSites(req, res, next) {
   try {
     const { projectId } = req.params;
     const sites = await siteService.getSitesByProject(projectId);
-    res.json(sites);
+    res.json({ success: true, sites });
   } catch (err) {
     next(err);
   }
@@ -32,9 +45,8 @@ async function listSites(req, res, next) {
 
 async function allSites(req, res, next) {
   try {
-    const { projectId } = req.params;
     const sites = await siteService.getAllSites();
-    res.json(sites);
+    res.json({ success: true, sites });
   } catch (err) {
     next(err);
   }
